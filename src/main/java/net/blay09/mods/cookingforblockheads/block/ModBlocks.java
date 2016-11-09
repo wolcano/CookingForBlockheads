@@ -21,6 +21,7 @@ public class ModBlocks {
 	public static BlockCowJar cowJar;
 	public static BlockSpiceRack spiceRack;
 	public static BlockCounter counter;
+	public static BlockChickenSink chickenSink;
 
 	public static void load() {
 		cookingTable = new BlockCookingTable();
@@ -62,6 +63,10 @@ public class ModBlocks {
 		counter = new BlockCounter();
 		registerBlock(counter);
 		GameRegistry.registerTileEntity(TileCounter.class, counter.getRegistryName().toString());
+
+		chickenSink = new BlockChickenSink();
+		registerBlock(chickenSink);
+		GameRegistry.registerTileEntity(TileChickenSink.class, chickenSink.getRegistryName().toString());
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -78,6 +83,7 @@ public class ModBlocks {
 		toaster.registerModels(mesher);
 		spiceRack.registerModels(mesher);
 		counter.registerModels(mesher);
+		chickenSink.registerModels(mesher);
 	}
 
 	public static void registerBlock(Block block) {

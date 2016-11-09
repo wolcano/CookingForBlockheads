@@ -44,6 +44,11 @@ public class ModRecipes {
 			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModBlocks.sink), "III", "WBW", "WWW", 'I', "ingotIron", 'W', "logWood", 'B', Items.WATER_BUCKET));
 		}
 
+		// Sink
+		if(config.getBoolean("Chicken in a Sink", "blocks", true, "")) {
+			GameRegistry.addShapedRecipe(new ItemStack(ModBlocks.sink), " # ", " S ", '#', Blocks.HAY_BLOCK, 'S', ModBlocks.sink);
+		}
+
 		// Toaster
 		if(config.getBoolean("Toaster", "blocks", true, "")) {
 			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ModBlocks.toaster), "  B", "IDI", "ILI", 'I', "ingotIron", 'B', Blocks.STONE_BUTTON, 'D', Blocks.IRON_TRAPDOOR, 'L', Items.LAVA_BUCKET));

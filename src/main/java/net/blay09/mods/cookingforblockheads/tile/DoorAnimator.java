@@ -35,8 +35,9 @@ public class DoorAnimator {
 		this.soundEventClose = soundEventClose;
 	}
 
-	public void setOpenRadius(float openRadius) {
+	public DoorAnimator setOpenRadius(float openRadius) {
 		this.openRadius = openRadius;
+		return this;
 	}
 
 	public void update() {

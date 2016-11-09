@@ -37,7 +37,7 @@ public class BlockSink extends BlockKitchen {
         setRegistryName(CookingForBlockheads.MOD_ID, "sink");
         setUnlocalizedName(getRegistryName().toString());
         setSoundType(SoundType.WOOD);
-        setHardness(5f);
+        setHardness(3f);
         setResistance(10f);
     }
 

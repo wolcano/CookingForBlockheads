@@ -110,6 +110,15 @@ public abstract class BlockKitchen extends BlockContainer {
 	@Override
 	public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced) {
 		tooltip.add(TextFormatting.YELLOW + I18n.format("tooltip." + CookingForBlockheads.MOD_ID + ":multiblockKitchen"));
+		if(hasTooltipDescription()) {
+			for (String s : I18n.format("tooltip." + getRegistryName() + ".description").split("\\\\n")) {
+				tooltip.add(TextFormatting.GRAY + s);
+			}
+		}
+	}
+
+	public boolean hasTooltipDescription() {
+		return false;
 	}
 
 	@SideOnly(Side.CLIENT)
