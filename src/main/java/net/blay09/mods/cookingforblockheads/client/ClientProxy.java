@@ -2,10 +2,14 @@ package net.blay09.mods.cookingforblockheads.client;
 
 import net.blay09.mods.cookingforblockheads.CommonProxy;
 import net.blay09.mods.cookingforblockheads.CookingForBlockheads;
+import net.blay09.mods.cookingforblockheads.api.CookingForBlockheadsAPI;
+import net.blay09.mods.cookingforblockheads.api.client.FridgeAttachmentRenderer;
 import net.blay09.mods.cookingforblockheads.block.BlockCorner;
 import net.blay09.mods.cookingforblockheads.block.BlockCounter;
 import net.blay09.mods.cookingforblockheads.block.BlockFridge;
 import net.blay09.mods.cookingforblockheads.block.ModBlocks;
+import net.blay09.mods.cookingforblockheads.block.fridge.InventoryReport;
+import net.blay09.mods.cookingforblockheads.client.fridge.InventoryReportRenderer;
 import net.blay09.mods.cookingforblockheads.client.gui.SortButtonHunger;
 import net.blay09.mods.cookingforblockheads.client.gui.SortButtonName;
 import net.blay09.mods.cookingforblockheads.client.gui.SortButtonSaturation;
@@ -83,6 +87,8 @@ public class ClientProxy extends CommonProxy {
 		ClientRegistry.bindTileEntitySpecialRenderer(TileToaster.class, new ToasterRenderer());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileSpiceRack.class, new SpiceRackRenderer());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileCounter.class, new CounterRenderer());
+
+		CookingForBlockheadsAPI.registerFridgeAttachmentRenderer(InventoryReport.class, InventoryReportRenderer.class);
 	}
 
 	@Override
@@ -137,6 +143,11 @@ public class ClientProxy extends CommonProxy {
 				CounterRenderer.modelsFlipped[i][j] = event.getModelRegistry().getObject(new ModelResourceLocation(BlockCounter.registryName, dummyStateMapper.getPropertyString(flippedState.withProperty(BlockCounter.FACING, facing).withProperty(BlockCounter.COLOR, color).getProperties())));
 			}
 		}
+	}
+
+	@Override
+	public void registerFridgeAttachmentRenderer(Class<? extends FridgeAttachmentRenderer> clazz) {
+
 	}
 
 }

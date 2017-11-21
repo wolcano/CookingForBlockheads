@@ -137,6 +137,7 @@ public class BlockFridge extends BlockKitchen {
 			}
 			return true;
 		}
+
 		if(facing == state.getValue(FACING)) {
 			TileFridge tileFridge = (TileFridge) world.getTileEntity(pos);
 			if(tileFridge != null) {
@@ -154,6 +155,7 @@ public class BlockFridge extends BlockKitchen {
 			if (!heldItem.isEmpty() && Block.getBlockFromItem(heldItem.getItem()) == ModBlocks.fridge) {
 				return false;
 			}
+
 			player.openGui(CookingForBlockheads.instance, GuiHandler.FRIDGE, world, pos.getX(), pos.getY(), pos.getZ());
 		}
 		return true;
@@ -182,6 +184,7 @@ public class BlockFridge extends BlockKitchen {
 		if (tileEntity != null) {
 			ItemUtils.dropItemHandlerItems(world, pos, tileEntity.getItemHandler());
 		}
+
 		super.breakBlock(world, pos, state);
 	}
 
@@ -191,6 +194,7 @@ public class BlockFridge extends BlockKitchen {
 		for (String s : I18n.format("tooltip." + registryName + ".description").split("\\\\n")) {
 			tooltip.add(TextFormatting.GRAY + s);
 		}
+
 		tooltip.add(TextFormatting.AQUA + I18n.format("tooltip.cookingforblockheads:dyeable"));
 	}
 
@@ -205,6 +209,7 @@ public class BlockFridge extends BlockKitchen {
 				neighbourFridge.setFridgeColor(color);
 			}
 		}
+
 		return true;
 	}
 

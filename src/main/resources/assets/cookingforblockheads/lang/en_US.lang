@@ -26,6 +26,7 @@ tile.cookingforblockheads:kitchen_floor.name=Kitchen Floor
 
 tooltip.cookingforblockheads:multiblock_kitchen=Multiblock Kitchen
 tooltip.cookingforblockheads:dyeable=Dyeable
+tooltip.cookingforblockheads:fridge_attachment=Fridge Attachment
 tooltip.cookingforblockheads:cooking_table.description=Enables crafting abilities.
 tooltip.cookingforblockheads:oven.description=Enables smelting abilities.
 tooltip.cookingforblockheads:sink.description=Provides water to recipes.

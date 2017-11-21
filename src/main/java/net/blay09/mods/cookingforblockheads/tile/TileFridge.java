@@ -1,23 +1,31 @@
 package net.blay09.mods.cookingforblockheads.tile;
 
+import com.google.common.collect.Lists;
 import net.blay09.mods.cookingforblockheads.ModSounds;
+import net.blay09.mods.cookingforblockheads.api.CookingForBlockheadsAPI;
+import net.blay09.mods.cookingforblockheads.api.FridgeAttachment;
 import net.blay09.mods.cookingforblockheads.api.capability.CapabilityKitchenItemProvider;
 import net.blay09.mods.cookingforblockheads.api.capability.KitchenItemProvider;
 import net.blay09.mods.cookingforblockheads.block.ModBlocks;
 import net.blay09.mods.cookingforblockheads.compat.Compat;
 import net.blay09.mods.cookingforblockheads.network.VanillaPacketHandler;
+import net.blay09.mods.cookingforblockheads.registry.FridgeAttachmentRegistry;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumDyeColor;
+import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.fml.common.Optional;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
@@ -26,6 +34,7 @@ import net.minecraftforge.items.wrapper.CombinedInvWrapper;
 import vazkii.quark.api.IDropoffManager;
 
 import javax.annotation.Nullable;
+import java.util.List;
 
 @Optional.Interface(modid = Compat.QUARK, iface = "vazkii.quark.api.IDropoffManager", striprefs = true)
 public class TileFridge extends TileEntity implements ITickable, IDropoffManager {
@@ -37,8 +46,10 @@ public class TileFridge extends TileEntity implements ITickable, IDropoffManager
             markDirty();
         }
     };
+
     private final KitchenItemProvider itemProvider = new KitchenItemProvider(itemHandler);
     private final DoorAnimator doorAnimator = new DoorAnimator(this, 1, 2);
+    private final List<FridgeAttachment> attachments = Lists.newArrayList();
 
     private EnumDyeColor fridgeColor = EnumDyeColor.WHITE;
     private boolean isDirty;
@@ -76,6 +87,15 @@ public class TileFridge extends TileEntity implements ITickable, IDropoffManager
         super.readFromNBT(tagCompound);
         itemHandler.deserializeNBT(tagCompound.getCompoundTag("ItemHandler"));
         fridgeColor = EnumDyeColor.byDyeDamage(tagCompound.getByte("FridgeColor"));
+
+        NBTTagList attachments = tagCompound.getTagList("Attachments", Constants.NBT.TAG_COMPOUND);
+        for(NBTBase entry : attachments) {
+            NBTTagCompound compound = (NBTTagCompound) entry;
+            ResourceLocation registryName = new ResourceLocation(compound.getString("id"));
+            FridgeAttachment attachment = FridgeAttachmentRegistry.createFridgeAttachment(registryName);
+            attachment.readFromNBT(compound);
+            this.attachments.add(attachment);
+        }
     }
 
     @Override
@@ -83,6 +103,15 @@ public class TileFridge extends TileEntity implements ITickable, IDropoffManager
         super.writeToNBT(tagCompound);
         tagCompound.setTag("ItemHandler", itemHandler.serializeNBT());
         tagCompound.setByte("FridgeColor", (byte) fridgeColor.getDyeDamage());
+
+        NBTTagList attachments = new NBTTagList();
+        for(FridgeAttachment attachment : this.attachments) {
+            NBTTagCompound compound = attachment.writeToNBT(new NBTTagCompound());
+            compound.setString("id", FridgeAttachmentRegistry.getRegistryNameFromClass(attachment.getClass()).toString());
+            attachments.appendTag(compound);
+        }
+        tagCompound.setTag("Attachments", attachments);
+
         return tagCompound;
     }
 

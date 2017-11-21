@@ -1,5 +1,6 @@
 package net.blay09.mods.cookingforblockheads;
 
+import net.blay09.mods.cookingforblockheads.api.FridgeAttachment;
 import net.blay09.mods.cookingforblockheads.api.IInternalMethods;
 import net.blay09.mods.cookingforblockheads.api.IKitchenMultiBlock;
 import net.blay09.mods.cookingforblockheads.api.ISortButton;
@@ -7,9 +8,12 @@ import net.blay09.mods.cookingforblockheads.api.SinkHandler;
 import net.blay09.mods.cookingforblockheads.api.ToastHandler;
 import net.blay09.mods.cookingforblockheads.api.ToastOutputHandler;
 import net.blay09.mods.cookingforblockheads.api.ToasterHandler;
+import net.blay09.mods.cookingforblockheads.api.client.FridgeAttachmentRenderer;
+import net.blay09.mods.cookingforblockheads.registry.FridgeAttachmentRegistry;
 import net.blay09.mods.cookingforblockheads.registry.CookingRegistry;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -58,6 +62,16 @@ public class InternalMethods implements IInternalMethods {
     @Override
     public void addCowClass(Class<? extends EntityLivingBase> clazz) {
         CowJarHandler.registerCowClass(clazz);
+    }
+
+    @Override
+    public void registerFridgeAttachment(ResourceLocation registryName, Class<? extends FridgeAttachment> clazz) {
+        FridgeAttachmentRegistry.registerFridgeAttachment(registryName, clazz);
+    }
+
+    @Override
+    public void registerFridgeAttachmentRenderer(Class<? extends FridgeAttachment> clazz, Class<? extends FridgeAttachmentRenderer> renderer) {
+        CookingForBlockheads.proxy.registerFridgeAttachmentRenderer(renderer);
     }
     
     @Override

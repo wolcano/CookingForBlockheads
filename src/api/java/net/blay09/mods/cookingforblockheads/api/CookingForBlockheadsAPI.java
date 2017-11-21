@@ -3,8 +3,10 @@ package net.blay09.mods.cookingforblockheads.api;
 import net.blay09.mods.cookingforblockheads.api.capability.CapabilityKitchenConnector;
 import net.blay09.mods.cookingforblockheads.api.capability.CapabilityKitchenItemProvider;
 import net.blay09.mods.cookingforblockheads.api.capability.CapabilityKitchenSmeltingProvider;
+import net.blay09.mods.cookingforblockheads.api.client.FridgeAttachmentRenderer;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -76,4 +78,11 @@ public class CookingForBlockheadsAPI {
         internalMethods.addSortButton(button);
     }
 
+    public static void registerFridgeAttachment(ResourceLocation registryName, Class<? extends FridgeAttachment> clazz) {
+        internalMethods.registerFridgeAttachment(registryName, clazz);
+    }
+
+    public static void registerFridgeAttachmentRenderer(Class<? extends FridgeAttachment> clazz, Class<? extends FridgeAttachmentRenderer> rendererClass) {
+        internalMethods.registerFridgeAttachmentRenderer(clazz, rendererClass);
+    }
 }

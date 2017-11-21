@@ -1,7 +1,9 @@
 package net.blay09.mods.cookingforblockheads.api;
 
+import net.blay09.mods.cookingforblockheads.api.client.FridgeAttachmentRenderer;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -15,6 +17,8 @@ public interface IInternalMethods {
     void addWaterItem(ItemStack waterItem);
     void addMilkItem(ItemStack milkItem);
     void addCowClass(Class<? extends EntityLivingBase> clazz);
-    IKitchenMultiBlock getKitchenMultiBlock(World world, BlockPos pos);
+	void registerFridgeAttachment(ResourceLocation registryName, Class<? extends FridgeAttachment> clazz);
+	void registerFridgeAttachmentRenderer(Class<? extends FridgeAttachment> clazz, Class<? extends FridgeAttachmentRenderer> renderer);
+	IKitchenMultiBlock getKitchenMultiBlock(World world, BlockPos pos);
 	void addSortButton(ISortButton button);
 }

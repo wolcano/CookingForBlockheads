@@ -81,7 +81,6 @@ public class CookingForBlockheads {
 	@Mod.EventHandler
 	public void postInit(FMLPostInitializationEvent event) {
 		new VanillaAddon();
-		event.buildSoftDependProxy(Compat.PAMS_HARVESTCRAFT, "net.blay09.mods.cookingforblockheads.compat.HarvestCraftAddon");
 		event.buildSoftDependProxy(Compat.APPLECORE, "net.blay09.mods.cookingforblockheads.compat.AppleCoreAddon");
 		event.buildSoftDependProxy(Compat.CRAFTTWEAKER, "net.blay09.mods.cookingforblockheads.compat.CraftTweakerAddon");
 
