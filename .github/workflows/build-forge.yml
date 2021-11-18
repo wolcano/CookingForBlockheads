@@ -10,12 +10,10 @@ jobs:
     strategy:
       matrix:
         # Use these Java versions
-        java: [
-          16    # Minimum supported by Minecraft
-        ]
+        java: [16]    # Minimum supported by Minecraft
         # and run on both Linux and Windows
         #os: [ubuntu-20.04, windows-latest]
-        os: [ubuntu-20.04] # speed it up for now by only testing one
+        os: [ubuntu-latest] # speed it up for now by only testing one
     runs-on: ${{ matrix.os }}
     steps:
       - name: checkout repository
@@ -26,21 +24,31 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: ${{ matrix.java }}
+      - name: Cache Gradle User Files
+        uses: actions/cache@v1
+        with:
+          path: ~/.gradle
+          key: ${{ runner.os }}-gradle-user-home
+      - name: Cache Gradle Files
+        uses: actions/cache@v1
+        with:
+          path: ./.gradle
+          key: ${{ runner.os }}-gradle-file
       - name: make gradle wrapper executable
         if: ${{ runner.os != 'Windows' }}
         run: chmod +x ./gradlew
       - name: build
-        run: ./gradlew build
+        run: ./gradlew build --no-daemon -i --stacktrace
         env:
           GPR_USERNAME: ${{secrets.GPR_USERNAME}}
           GPR_TOKEN: ${{secrets.GPR_TOKEN}}
           GPR_BUILD_NUMBER: ${{github.run_number}}
       - name: capture build artifacts
-        if: ${{ runner.os == 'Linux' && matrix.java == '16' }} # Only upload artifacts built from latest java on one OS
+        #if: ${{ runner.os == 'Linux' && matrix.java == '16' }} # Only upload artifacts built from latest java on one OS
         uses: actions/upload-artifact@v2
         with:
           name: Artifacts
-          path: build/libs/
+          path: build/libs/*.jar
   publish:
     needs: build
     runs-on: ubuntu-latest
