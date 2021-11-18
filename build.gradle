@@ -12,7 +12,7 @@ buildscript {
         }
     }
     dependencies {
-        classpath group: "net.minecraftforge.gradle", name: "ForgeGradle", version: "3.+", changing: true
+        classpath group: "net.minecraftforge.gradle", name: "ForgeGradle", version: "5.1.+", changing: true
     }
 }
 
@@ -20,10 +20,8 @@ apply plugin: "net.minecraftforge.gradle"
 
 def BUILD_NUMBER = System.getenv("BUILD_NUMBER") ?: patch_version
 
-sourceCompatibility = targetCompatibility = '1.8'
-compileJava {
-    sourceCompatibility = targetCompatibility = '1.8'
-}
+//sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '16'
+java.toolchain.languageVersion = JavaLanguageVersion.of(16)
 
 version = major_version + "." + minor_version + "." + BUILD_NUMBER
 group = "net.blay09.mods"
@@ -40,7 +38,8 @@ sourceSets {
 }
 
 minecraft {
-    mappings channel: mappings_channel, version: mappings_version
+    //mappings channel: mappings_channel, version: mappings_version
+    mappings channel: 'official', version: '1.17.1'
 
     accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
 
@@ -114,22 +113,23 @@ dependencies {
     ])
 
     compileOnly "inventory-tweaks:InventoryTweaks:1.64+dev.146"
-    compileOnly fg.deobf("mezz.jei:jei-1.16.3:7.6.0.49:api")
-    runtimeOnly fg.deobf("mezz.jei:jei-1.16.3:7.6.0.49")
-    compile fg.deobf("curse.maven:hwyla-253449:3033593")
-    compile fg.deobf("curse.maven:the-one-probe-245211:3108607")
-    compile fg.deobf("curse.maven:ex-compressum-241967:3226248")
+    compileOnly fg.deobf("mezz.jei:jei-1.17.1:8.2.0.32:api")
+    runtimeOnly fg.deobf("mezz.jei:jei-1.17.1:8.2.0.32")
+    //compile fg.deobf("curse.maven:hwyla-253449:3033593")
+    //compile fg.deobf("curse.maven:the-one-probe-245211:3108607")
+    compile fg.deobf("curse.maven:the-one-probe-1.17:4.0.0")
+    //compile fg.deobf("curse.maven:ex-compressum-241967:3226248")
 
-    compile fg.deobf("curse.maven:pams-harvestcraft-2-food-core-372534:3068560")
-    compile fg.deobf("curse.maven:pams-harvestcraft-2-food-extended-402231:3117044")
-    compile fg.deobf("curse.maven:pams-harvestcraft-2-crops-361385:3076451")
-    compile fg.deobf("curse.maven:pams-harvestcraft-2-trees-365460:3117043")
-    compile fg.deobf("curse.maven:farmers-delight-398521:3188508")
-    compile fg.deobf("curse.maven:mekanism-268560:3206392")
-    compile fg.deobf("curse.maven:immersive-engineering-231951:3233018")
-    compile fg.deobf("curse.maven:vanillafoodpantry-mod-238170:3232078")
-    compile fg.deobf("curse.maven:carrots-lib-311327:3231845")
-    compile fg.deobf("curse.maven:crafttweaker-239197:3441949")
+    //compile fg.deobf("curse.maven:pams-harvestcraft-2-food-core-372534:3068560")
+    //compile fg.deobf("curse.maven:pams-harvestcraft-2-food-extended-402231:3117044")
+    //compile fg.deobf("curse.maven:pams-harvestcraft-2-crops-361385:3076451")
+    //compile fg.deobf("curse.maven:pams-harvestcraft-2-trees-365460:3117043")
+    //compile fg.deobf("curse.maven:farmers-delight-398521:3188508")
+    //compile fg.deobf("curse.maven:mekanism-268560:3206392")
+    //compile fg.deobf("curse.maven:immersive-engineering-231951:3233018")
+    //compile fg.deobf("curse.maven:vanillafoodpantry-mod-238170:3232078")
+    //compile fg.deobf("curse.maven:carrots-lib-311327:3231845")
+    //compile fg.deobf("curse.maven:crafttweaker-239197:3441949")
 
     def obfModsDir = new File("run/obfmods")
     obfModsDir.eachFile { file ->
