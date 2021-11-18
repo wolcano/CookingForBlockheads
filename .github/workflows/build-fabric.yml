@@ -29,6 +29,16 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: ${{ matrix.java }}
+      - name: Cache Gradle User Files
+        uses: actions/cache@v1
+        with:
+          path: ~/.gradle
+          key: ${{ runner.os }}-gradle-user-home
+      - name: Cache Gradle Files
+        uses: actions/cache@v1
+        with:
+          path: ./.gradle
+          key: ${{ runner.os }}-gradle-file
       - name: make gradle wrapper executable
         if: ${{ runner.os != 'Windows' }}
         run: chmod +x ./gradlew
